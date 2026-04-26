@@ -1,0 +1,8 @@
+Normalización:
+Se reorganizó la tabla original separando la información en varias tablas (Películas, Actores, Estudios y Tipos) para evitar mezclar datos distintos en una sola tabla.
+Redundancias:
+Cambié redundancias como la repetición de películas (Star Wars y Ben Hur aparecían varias veces). Por eso creé una tabla de Películas y relacionándola con Actores mediante una tabla intermedia.
+También encontré campos mal definidos como “Duración Tipo” y “Dirección Estudio Actor”, que mezclaban varios datos. Se separaron en atributos simples como duración, tipo, dirección y actor.
+Relaciones:
+La relación entre Películas y Actores (muchos a muchos) lo resuelvo creando la tabla intermedia “Pelicula_Actor” con claves foráneas.
+También agregué la tabla “Tipos” para organizar mejor el tipo de película y se definieron claves primarias y foráneas para asegurar la integridad de los datos y no tener que repetir esos datos a medida que haya mucha cantidad de películas.
