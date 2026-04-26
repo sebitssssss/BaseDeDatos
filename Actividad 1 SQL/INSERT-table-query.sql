@@ -1,0 +1,16 @@
+INSERT into Empleados(Nombre, Apellido, Sector, Edad, Sexo, Barrio_vivienda, CodPostal, Ingreso, Sueldo, Antiguedad, Celular)
+values('Lucas', 'González','RRHH',  16, 'M', 'Belgrano', 1425, 2011, 15.4587, 125.2, '+54 11 4181-4438'),
+('Valentina', 'Rodríguez','RRHH',  16, 'F', 'Belgrano', 8000, 2011, 15.4587, 125.2, '+54 11 4181-4438'),
+('Mateo', 'Rodríguez','RRHH',  16, 'M', 'Belgrano', 5000, 2011, 15.4587, 125.2, '+54 11 4181-4438'),
+('Sofía', 'López','Adm',  16, 'F', 'Almagro', 1515, 2011, 15.4587, 125.2, '+54 11 4181-4438'),
+('Tomás', 'Martínez','Adm',  16, 'M', 'Flores', 1515, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Camila', 'Pérez','Adm',  16, 'F', 'Almagro', 1425, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Joaquín', 'Sánchez','Adm',  16, 'M', 'Flores', 8000, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Martina', 'Romero','Adm',  16, 'F', 'Almagro', 1515, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Bruno', 'Torres','Adm',  16, 'M', 'Flores', 5000, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Emilia', 'Díaz','Adm',  16, 'F', 'Almagro', 1515, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Nicolás', 'Herrera','Adm',  16, 'M', 'Flores', 1425, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Jazmín', 'Castro','Adm',  16, 'F', 'Almagro', 8000, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Agustín', 'Morales','Adm',  20, 'M', 'Flores', 5000, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Delfina', 'Morales','Adm',  15, 'F', 'Almagro', 1515, 2026, 15.4587, 125.2, '+54 11 4181-4438'),
+('Benjamín', 'Vega','Adm',  17, 'F', 'Flores', 1425, 2026, 15.4587, 125.2, '+54 11 4181-4438');

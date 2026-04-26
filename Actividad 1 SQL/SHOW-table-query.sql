@@ -1,0 +1,11 @@
+SELECT * from EMPLEADOS;
+SELECT Nombre, Apellido from EMPLEADOS where Barrio_vivienda = 'Belgrano';
+SELECT Apellido, Edad from EMPLEADOS where Ingreso = 2010 or Ingreso = 2011 or Ingreso = 2012;
+SELECT COUNT(*) from EMPLEADOS where sexo = 'F' and sector = 'RRHH';
+SELECT Apellido, Sector, Celular from EMPLEADOS;
+SELECT Nombre, Apellido, Sueldo from EMPLEADOS where Barrio_vivienda = 'Belgrano' or Barrio_vivienda = 'Flores' order by Nombre desc limit 15;
+SELECT COUNT(*) from EMPLEADOS;
+SELECT Nombre, Apellido from EMPLEADOS order by Edad desc limit 1;
+SELECT Nombre, Apellido from EMPLEADOS order by Edad asc limit 1;
+SELECT AVG(Edad) from EMPLEADOS;
+SELECT AVG(Edad) from EMPLEADOS where sector = 'RRHH';
