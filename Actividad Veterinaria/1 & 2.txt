@@ -1,0 +1,26 @@
+1. Definir:
+
+A: ¿Qué es una Clave Primaria (Primary Key) y para qué sirve en una tabla?
+
+RTA: Una clave primaria, o “Primary key” es una clave / llave única identificativa.
+
+En una tabla, la Primarykey, sirve para indicar y asignar ciertos valores a un número en concreto, haciendo que todos los datos en los registros se pueden interpretar como un número, se puede usar letras también, pero generalmente se usa números consecutivos.
+
+
+B: Explique la diferencia entre un dato y la información.
+
+RTA: La diferencia entre un dato y la información, es que el dato es un valor o palabra suelto, mientras que la información es usar el dato para crear un resultado más extenso y que sea legible para el usuario. Ejemplo: Dato: 25, Información: Hace 25 grados de temperatura.
+
+
+2. Verdadero o Falso:
+
+A: Un atributo es lo mismo que un campo. VERDADERO
+
+B: En un DER, las relaciones 1 a N indican que un registro de la tabla A se relaciona
+
+con un solo registro de la tabla B. FALSO, las relaciones 1 a N indican que ambas tablas están relacionadas, y que un registro de la tabla A se relaciona con múltiples registros de la tabla B
+
+C: El software propietario permite al usuario modificar el código. FALSO, usualmente el software propietario no te deja modificar el código.
+
+D: Una tabla es un conjunto de registros y campos. VERDADERO
+
