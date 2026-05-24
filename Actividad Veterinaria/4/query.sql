@@ -1,0 +1,59 @@
+DROP DATABASE IF EXISTS veterinaria;
+CREATE DATABASE veterinaria;
+USE veterinaria;
+
+CREATE TABLE Clinicas(
+  ID_Clinica INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Veterinarios(
+  ID_Veterinario INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL,
+  Legajo VARCHAR(50) NOT NULL,
+  Especialidad VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Mascotas(
+  ID_Mascota INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Animales(
+  ID_Animal INT AUTO_INCREMENT PRIMARY KEY,
+  ID_Mascota INT NOT NULL,
+  Especie VARCHAR(20) NOT NULL,
+  Raza VARCHAR(50) NOT NULL,
+  Edad INT NOT NULL,
+  FOREIGN KEY (ID_Mascota) REFERENCES Mascotas(ID_Mascota)
+);
+
+CREATE TABLE DuenosMascotas(
+  ID_DuenoMascota INT AUTO_INCREMENT PRIMARY KEY,
+  ID_Mascota INT NOT NULL,
+  Nombre VARCHAR(50) NOT NULL,
+  Apellido VARCHAR(50) NOT NULL,
+  Telefono VARCHAR(20) NOT NULL,
+  FOREIGN KEY (ID_Mascota) REFERENCES Mascotas(ID_Mascota)
+);
+
+CREATE TABLE Turnos(
+  ID_Turno INT AUTO_INCREMENT PRIMARY KEY,
+  ID_Veterinario INT NOT NULL,
+  ID_Clinica INT NOT NULL,
+  ID_Mascota INT NOT NULL,
+  Fecha DATE NOT NULL,
+  Hora TIME NOT NULL,
+  Motivo VARCHAR(100) NOT NULL,
+  FOREIGN KEY (ID_Veterinario) REFERENCES Veterinarios(ID_Veterinario),
+  FOREIGN KEY (ID_Clinica) REFERENCES Clinicas(ID_Clinica),
+  FOREIGN KEY (ID_Mascota) REFERENCES Mascotas(ID_Mascota)
+);
+
+CREATE TABLE ConsultasMascotas(
+  ID_ConsultaMascota INT AUTO_INCREMENT PRIMARY KEY,
+  ID_Consulta INT NOT NULL,
+  ID_Mascota INT NOT NULL,
+  FOREIGN KEY (ID_Consulta) REFERENCES Turnos(ID_Turno),
+  FOREIGN KEY (ID_Mascota) REFERENCES Mascotas(ID_Mascota)
+);
