@@ -1,0 +1,3 @@
+SELECT Nombre, COUNT(p.ID_Pago) FROM Socios s JOIN Pagos p ON s.ID_Socio = p.ID_Socio GROUP BY s.ID_Socio, s.Nombre HAVING SUM(p.Monto) > 26449;
+SELECT Tipo, SUM(p.Monto) FROM Planes l JOIN Pagos p ON l.ID_Plan = p.ID_Plan JOIN Socios s ON s.ID_Socio = p.ID_Socio GROUP BY l.ID_Plan, l.Tipo, s.ID_Socio HAVING COUNT(s.ID_Socio) > 50 AND SUM(p.Monto) > 100000;
+SELECT s.ID_Socio, l.Tipo, COUNT(*) FROM Socios s JOIN Pagos p ON s.ID_Socio = p.ID_Socio JOIN Planes l ON l.ID_Plan = p.ID_Plan GROUP BY s.ID_Socio, l.Tipo HAVING COUNT(*) > 3;

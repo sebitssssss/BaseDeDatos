@@ -1,0 +1,3 @@
+SELECT c.Nombre, p.Nombre, SUM(Cantidad) FROM Categorias c JOIN Productos p ON p.ID_Categoria = c.ID_Categoria JOIN Ventas d ON d.ID_Producto = p.ID_Producto GROUP BY c.ID_Categoria, c.Nombre, p.ID_Producto, p.Nombre HAVING SUM(d.Cantidad) > 500;
+SELECT c.Nombre, AVG(p.Precio), SUM(v.Cantidad) FROM Categorias c JOIN Productos p ON p.ID_Categoria = c.ID_Categoria JOIN Ventas v ON v.ID_Producto = p.ID_Producto GROUP BY c.ID_Categoria, c.Nombre HAVING AVG(p.Precio) > 1500 AND SUM(v.Cantidad) >= 10;
+SELECT c.Nombre, SUM(v.Cantidad * p.Precio) FROM Categorias c JOIN Productos p ON p.ID_Categoria = c.ID_Categoria JOIN Ventas v ON v.ID_Producto = p.ID_Producto WHERE p.Precio < 100 GROUP BY c.ID_Categoria, c.Nombre HAVING SUM(v.Cantidad * p.Precio) < 5000;

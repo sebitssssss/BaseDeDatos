@@ -1,0 +1,3 @@
+SELECT Modelo, COUNT(t.ID_Ticket), SUM(t.Precio) FROM Aviones a JOIN Vuelos v ON v.ID_Avion = a.ID_Avion JOIN Tickets t ON t.ID_Avion = a.ID_Avion GROUP BY a.ID_Avion, a.Modelo HAVING COUNT(t.ID_Ticket) > 100 AND SUM(t.Precio) > 2000000;
+SELECT v.ID_Vuelo, AVG(t.Precio) FROM Vuelos v JOIN Tickets t ON t.ID_Avion = v.ID_Avion WHERE v.Origen = 'EZEIZA' GROUP BY v.ID_Vuelo HAVING AVG(t.Precio) > 500;
+SELECT Modelo, COUNT(ID_Vuelo) FROM Aviones a JOIN Vuelos v ON a.ID_Avion = v.ID_Avion WHERE v.Fecha >= NOW() - INTERVAL 1 MONTH GROUP BY a.ID_Avion, a.Modelo HAVING COUNT(v.ID_Vuelo) > 50;

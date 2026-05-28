@@ -1,0 +1,3 @@
+SELECT Nombre, SUM(x.Monto) FROM Edificios e JOIN Departamentos d ON d.ID_Edificio = e.ID_Edificio JOIN Expensas x ON x.ID_Departamento = d.ID_Departamento WHERE x.Estado = 'Impago' GROUP BY e.ID_Edificio, e.Nombre HAVING SUM(x.Monto) > 1000000 AND COUNT(x.ID_Expensa) > 5;
+SELECT Nombre, AVG(x.Monto) FROM Edificios e JOIN Departamentos d ON d.ID_Edificio = e.ID_Edificio JOIN Expensas x ON x.ID_Departamento = d.ID_Departamento WHERE x.Estado = 'Pago' GROUP BY e.ID_Edificio, e.Nombre HAVING AVG(x.Monto) >= 20000; 
+SELECT Nombre, SUM(x.Monto) FROM Edificios e JOIN Departamentos d ON d.ID_Edificio = e.ID_Edificio JOIN Expensas x ON x.ID_Departamento = d.ID_Departamento WHERE x.Estado = 'Pago' GROUP BY e.ID_Edificio, e.Nombre ORDER BY SUM(x.Monto) DESC LIMIT 3;
