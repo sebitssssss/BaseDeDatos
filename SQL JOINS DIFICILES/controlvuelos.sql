@@ -1,3 +1,6 @@
+create database Aviones;
+use Aviones;
+
 create table aviones
 (idavion int primary key auto_increment,
 modelo varchar(25),
