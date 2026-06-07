@@ -1,0 +1,29 @@
+DROP DATABASE IF EXISTS fg;
+CREATE DATABASE fg;
+USE fg;
+
+CREATE TABLE Sucursales(
+IDSucursal INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+IDSucursalOrigen INT NOT NULL,
+Ciudad VARCHAR(50) NOT NULL,
+Provincia VARCHAR(50) NOT NULL,
+Responsable VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE Paquetes(
+IDPaquete INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+Peso INT(10) NOT NULL,
+DescripcionContenido VARCHAR(100) NOT NULL,
+TipoEnvio ENUM('Express', 'Normal') NOT NULL,
+IDSucursalOrigen INT NOT NULL,
+FOREIGN KEY (IDSucursalOrigen) REFERENCES Sucursales(IDSucursal)
+);
+ 
+CREATE TABLE Envios(
+IDEnvio INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+IDPaquete INT NOT NULL,
+CostoEnvio INT(10) NOT NULL,
+FechaDespacho DATE NOT NULL,
+Estado ENUM('Entregado', 'En Camino', 'Devuelto') NOT NULL,
+FOREIGN KEY (IDPaquete) REFERENCES Paquetes(IDPaquete)
+);
