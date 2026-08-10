@@ -1,0 +1,24 @@
+body {
+    background-color: cornflowerblue;
+}
+
+
+h1,h2,h3,h4 {
+    text-align: center;
+}
+
+/* Para cambiar algo de cada categoria es tan facil como poner */
+
+p {
+    color: rgb(0, 255, 76);
+}
+
+a{
+    margin: 50px 20px;
+    text-decoration: none; /* Sacar subrallado */
+    color: red;
+}
+
+a:hover{
+    color: violet;
+}
