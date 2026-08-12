@@ -1,0 +1,47 @@
+DICCIONARIO DE DATOS
+
+Ciudad
+----------------------------------------------------------
+Campo       Tipo            Clave   Descripcion
+id_ciudad   INT             PK      Identificador unico de la ciudad
+nombre      VARCHAR(50)             Nombre de la ciudad
+
+Gimnasio
+----------------------------------------------------------
+Campo       Tipo            Clave   Descripcion
+id_gimnasio INT             PK      Identificador unico del gimnasio
+nombre      VARCHAR(50)             Nombre del gimnasio
+lider       VARCHAR(50)             Nombre del lider del gimnasio
+id_ciudad   INT             FK      Ciudad donde se ubica el gimnasio 
+
+Entrenador
+----------------------------------------------------------
+Campo         Tipo          Clave   Descripcion
+id_entrenador INT           PK      Identificador unico del entrenador
+nombre        VARCHAR(50)           Nombre del entrenador
+id_ciudad     INT           FK      Ciudad a la que pertenece
+id_gimnasio   INT           FK      Gimnasio donde entrena
+
+Tipo
+----------------------------------------------------------
+Campo       Tipo            Clave   Descripcion
+id_tipo     INT             PK      Identificador unico del tipo elemental
+nombre      VARCHAR(30)             Nombre del tipo
+
+Pokemon
+----------------------------------------------------------
+Campo         Tipo          Clave   Descripcion
+id_pokemon    INT           PK      Identificador unico del pokemon
+nombre        VARCHAR(50)           Nombre del pokemon
+id_tipo       INT           FK      Tipo elemental del pokemon 
+nivel         INT                   Nivel de poder del pokemon
+id_entrenador INT           FK      Entrenador dueno del pokemon
+
+Batalla
+----------------------------------------------------------
+Campo        Tipo           Clave   Descripcion
+id_batalla   INT            PK      Identificador unico de la batalla
+id_pokemon1  INT            FK      Primer pokemon participante 
+id_pokemon2  INT            FK      Segundo pokemon participante 
+id_ganador   INT            FK      Pokemon ganador de la batalla
+fecha        DATE                   Fecha en que se realizo la batalla
