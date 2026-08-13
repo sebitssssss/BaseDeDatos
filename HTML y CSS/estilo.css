@@ -1,0 +1,60 @@
+.body{
+    background-image: url('gato2.jpg');
+    background-blend-mode: darken;
+}
+
+.Titulo{
+text-align: center;
+color: aqua;
+}
+
+.Subtitulo{
+text-align: center;
+color: chocolate;
+}
+
+.Texto{
+    color: blueviolet;
+    text-shadow: 2000px;
+    margin-left: 320px;
+}
+
+.Texto2{
+    color:red;
+    margin-left: 320px;
+}
+
+.Texto3{
+    color:dodgerblue;
+    margin-left: 320px;
+}
+
+.Texto4{
+    color:rgb(44, 44, 44);
+    margin-left: 320px;
+}
+
+.gato{
+    margin-top: 40px;
+    width: 300px;
+}
+
+.Milanesa{
+    margin-left: 320px;
+    width: 300px;
+}
+
+.Yo{
+    margin-left: 320px;
+    width: 300px;
+}
+
+.Banco{
+    margin-left: 320px;
+    width: 300px;
+}
+
+.Mc{
+    margin-left: 320px;
+    width: 300px;
+}
