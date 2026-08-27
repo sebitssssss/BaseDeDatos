@@ -140,3 +140,57 @@ fecha_hora
 ) VALUES
 (1, 'Primera Victoria', '2026-08-20 10:05:00'),
 (1, 'Ojo de Aguila', '2026-08-20 10:05:00');
+
+-- Leaderboard
+SELECT
+s.dificultad,
+p.nombre_usuario,
+l.puntaje,
+l.intentos_mejor,
+RANK() OVER (PARTITION BY s.dificultad ORDER BY l.puntaje DESC, l.intentos_mejor ASC) AS posicion
+FROM Leaderboard l
+JOIN Sessions s ON s.id = l.session_id
+JOIN Players p ON p.id = s.player_id
+ORDER BY s.dificultad, posicion;
+
+-- Jugadores con mas victorias
+SELECT
+p.nombre_usuario,
+COUNT(*) AS victorias
+FROM Sessions s
+JOIN Players p ON p.id = s.player_id
+WHERE s.resultado = 'victoria'
+GROUP BY p.id, p.nombre_usuario
+ORDER BY victorias DESC;
+
+-- Tiempo promedio por dificultad
+SELECT
+s.dificultad,
+COUNT(ss.id) AS partidas_terminadas,
+ROUND(AVG(ss.eficiencia), 2) AS eficiencia_promedio,
+ROUND(AVG(ss.tiempo_total), 0) AS tiempo_promedio_segundos
+FROM SessionStats ss
+JOIN Sessions s ON s.id = ss.session_id
+GROUP BY s.dificultad
+ORDER BY s.dificultad;
+
+-- Repetición de los intentos de una partida
+SELECT
+a.intento_num,
+a.combinacion_intentada,
+a.aciertos_posicion,
+a.aciertos_color,
+a.fecha_hora
+FROM Attempts a
+WHERE a.session_id = 1
+ORDER BY a.intento_num;
+
+-- Logros desbloqueados por jugador
+SELECT
+p.nombre_usuario,
+al.tipo_logro,
+al.fecha_hora
+FROM AchievementLogs al
+JOIN Sessions s ON s.id = al.session_id
+JOIN Players p ON p.id = s.player_id
+ORDER BY p.nombre_usuario, al.fecha_hora;
