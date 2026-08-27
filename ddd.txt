@@ -1,0 +1,88 @@
+DICCIONARIO DE DATOS
+
+Tabla: Players
+Desc: Almacena información de los jugadores registrados en el sistema
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único del jugador │
+│ nombre_usuario │ VARCHAR(25) │ NOT NULL, UNIQUE │ Nombre de usuario único │
+│ email │ VARCHAR(50) │ NOT NULL, UNIQUE │ Correo electrónico único │
+│ password_hash │ VARCHAR(50) │ NOT NULL │ Hash seguro de la contraseña │
+│ fecha_registro │ DATE │ NOT NULL, DEFAULT CURRENT │ Fecha de registro del jugador │
+
+Tabla: CodeConfigs
+Desc: Define las configuraciones disponibles para los códigos secretos del juego
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ longitud │ INT │ NOT NULL, CHECK (2-10) │ Longitud del código (2 a 10) │
+│ colores_disponibles │ VARCHAR(255) │ NOT NULL │ Colores disponibles (CSV) │
+│ permitir_repeticiones │ BOOLEAN │ NOT NULL, DEFAULT TRUE │ Permite colores repetidos │
+
+Tabla: Sessions
+Desc: Registra cada sesión de juego iniciada por un jugador.
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ player_id │ INT │ FK NOT NULL │ Referencia a Players.id │
+│ config_id │ INT │ FK NOT NULL │ Referencia a CodeConfigs.id │
+│ fecha_inicio │ DATETIME │ NOT NULL │ Fecha/hora de inicio │
+│ fecha_fin │ DATETIME │ NULL │ Fecha/hora de finalización │
+│ dificultad │ ENUM │ NOT NULL │ Facil, Medio, Dificil │
+│ codigo_secreto │ VARCHAR(50) │ NOT NULL │ El codigo a adivinar │
+│ resultado │ ENUM │ DEFAULT 'en_curso' │ en_curso, victoria, derrota │
+
+Tabla: Attempts
+Desc: Registra cada intento de adivinación realizado en una sesión.
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ session_id │ INT │ FK NOT NULL │ Referencia a Sessions.id │
+│ intento_num │ INT │ NOT NULL, CHECK (>0) │ Número secuencial │
+│ fecha_hora │ DATETIME │ DEFAULT CURRENT_TIMESTAMP │ Tiempo │
+│ combinacion_intentada│ VARCHAR(50) │ NOT NULL │ Combinacion ingresada │
+│ aciertos_posicion │ INT │ DEFAULT 0 │ Colores en posicion correcta │
+│ aciertos_color │ INT │ DEFAULT 0 │ Colores presentes en otra posicion │
+
+Tabla: FeedbackRules
+Descripción: Define las reglas de puntuación para diferentes tipos de feedback.
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ tipo_feedback │ VARCHAR(30) │ NOT NULL, UNIQUE │ Aciertos, errores │
+│ valor_puntos │ INT │ NOT NULL │ Puntos asignados │
+
+6. TABLA: SessionStats
+Desc: Almacena estadísticas resumidas de cada sesión.
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ session_id │ INT │ FK NOT NULL, UNIQUE │ Referencia a Sessions.id │
+│ intentos_totales │ INT │ DEFAULT 0 │ Total de intentos │
+│ tiempo_total │ INT │ NULL │ Tiempo en segundos │
+│ eficiencia │ DECIMAL(5,2) │ NULL │ Porcentaje (0-100) │
+
+Tabla: Leaderboard
+Descripción: Mantiene un registro de las mejores puntuaciones en el ranking.
+
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id | INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ session_id │ INT │ FK NOT NULL, UNIQUE │ Referencia a Sessions.id │
+│ puntaje │ INT │ DEFAULT 0 │ Puntuación total │
+│ intentos_mejor │ INT │ NOT NULL │ Mejor número de intentos │
+
+Tabla: AchievementLogs
+Desc: Registra los logros desbloqueados por los jugadores.
+
+Campos:
+│ Campo │ Tipo Dato │ Restricciones │ Descripción │
+│ id │ INT │ PK, AUTO_INCREMENT │ Identificador único │
+│ session_id │ INT │ FK NOT NULL │ Referencia a Sessions.id │
+│ tipo_logro │ VARCHAR(60) │ NOT NULL │ Nombre del logro │
+│ fecha_hora │ DATETIME │ DEFAULT CURRENT_TIMESTAMP │ Fecha de desbloqueo │
