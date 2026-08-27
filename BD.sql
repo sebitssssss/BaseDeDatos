@@ -98,7 +98,7 @@ dificultad,
 codigo_secreto,
 resultado
 ) VALUES
-(1, 1, '2026-08-20 10:00:00', '2026-08-20 10:05:00', 'Facil', 'Azul,Amarillo,Rojo,Verde', 'ganado'),
+(1, 1, '2026-08-20 10:00:00', '2026-08-20 10:05:00', 'Facil', 'Azul,Amarillo,Rojo,Verde', 'victoria'),
 (2, 2, '2026-08-21 18:30:00', NULL, 'Dificil', 'Naranja,Morado,Rojo,Azul', 'en_curso');
 
 INSERT INTO Attempts (
