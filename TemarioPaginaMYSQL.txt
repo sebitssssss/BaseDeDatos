@@ -1,0 +1,65 @@
+Historia de MYSQL
+
+	Historia
+	Referentes	
+
+Store procedure
+
+SQL
+
+	SubConsultas
+	Joins
+		innerjoin
+		join
+		left join
+		right join
+		outer join	
+		full join
+		cross join
+
+	Like
+	Alter Table
+	Having
+	Order BY
+	Group BY
+	Count
+	Sum
+	Avg
+	Max
+	Min
+	PK y FK
+	Select
+	From
+	Where
+	Create
+	Limit
+	desc
+	asc
+	drop
+	truncate
+	delete
+		
+Dickccionario de datos
+
+Variables
+
+	date
+	int
+	varchar
+	enum
+	datetime
+	decimal
+	float
+	char
+	timestamp
+	
+Normalizacion
+
+	1FN
+	2FN
+	3FN
+
+DER
+
+	Buenas Practicas	
+	Otras formas de ver el der (diagrama de bloques)
