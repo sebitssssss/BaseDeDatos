@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL - Repaso hasta ahora</title>
+  <meta name="description" content="Una página sencilla sobre SQL: sus funciones principales y una sección dedicada a Stored Procedures.">
+</head>
+<body style="margin:0; background-color:#f5f1ea; font-family:Verdana, Arial, sans-serif; color:#3a3a3a;">
+
+  <header style="background-color:#6a89a6; color:white; padding:24px; text-align:center;">
+    <h1 style="margin:0; font-size:1.8em;">SQL</h1>
+    <p style="margin-top:10px; font-style:italic; font-size:0.95em;">Repaso hasta ahora:</p>
+  </header>
+
+  <nav style="background-color:#7d9eb8; padding:10px; text-align:center; color:white;">
+    <span style="font-weight:bold;">Sebastián Gómez Besteiro</span>
+  </nav>
+
+  <main style="max-width:800px; margin:0 auto; padding:24px;">
+
+    <section id="que-es" style="margin-bottom:36px;">
+      <h2 style="color:#44546a; font-weight:bold;">¿Qué es SQL?</h2>
+      <p>SQL es un lenguaje que sirve para hablar con las bases de datos. Con él le podemos pedir a la base de datos que nos muestre datos, que guarde datos nuevos, que cambie algo que ya estaba o que borre lo que no hace falta.</p>
+      <p>Algunas bases de datos que entienden SQL son MySQL, PostgreSQL, SQL Server y SQLite.</p>
+    </section>
+
+    <section id="funciones" style="margin-bottom:36px;">
+      <h2 style="color:#44546a; font-weight:bold;">Funciones básicas de SQL</h2>
+      <p>Estas son las cosas que más se usan cuando uno empieza con SQL:</p>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">1. SELECT - Ver datos</h3>
+      <p>Se usa para pedirle a la base de datos que nos muestre información de una tabla.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>-- Mostrar todo lo que hay en la tabla usuarios
+SELECT * FROM usuarios;
+
+-- Mostrar solo el nombre y el email
+SELECT nombre, email FROM usuarios;</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">2. INSERT - Agregar datos</h3>
+      <p>Sirve para meter un dato nuevo dentro de una tabla.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>INSERT INTO usuarios (nombre, email)
+VALUES ('Juan', 'juan@email.com');</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">3. UPDATE - Cambiar datos</h3>
+      <p>Sirve para modificar un dato que ya existe. Hay que tener cuidado de decirle bien a quién cambiarle el dato, porque si no le cambia a todos.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>UPDATE usuarios
+SET nombre = 'Juan Pérez'
+WHERE id = 1;</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">4. DELETE - Borrar datos</h3>
+      <p>Sirve para borrar una fila. Igual que con UPDATE, hay que usar WHERE para borrar solo lo que queremos.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>DELETE FROM usuarios
+WHERE id = 1;</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">5. WHERE - Filtrar</h3>
+      <p>Se pone junto con SELECT, UPDATE o DELETE para que solo tome en cuenta las filas que cumplen una condición.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>SELECT * FROM usuarios
+WHERE edad >= 18;</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">6. ORDER BY - Ordenar</h3>
+      <p>Sirve para que los resultados salgan ordenados, por ejemplo alfabéticamente.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>SELECT * FROM usuarios
+ORDER BY nombre ASC;</code></pre>
+
+      <h3 style="color:#5a7a99; font-weight:bold;">7. JOIN - Unir tablas</h3>
+      <p>Sirve cuando tenemos los datos repartidos en dos tablas y queremos verlos juntos en un solo resultado.</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>SELECT usuarios.nombre, pedidos.producto
+FROM usuarios
+JOIN pedidos ON usuarios.id = pedidos.usuario_id;</code></pre>
+    </section>
+
+    <section id="stored" style="margin-bottom:36px;">
+      <h2 style="color:#44546a; font-weight:bold;">Stored Procedures (Procedimientos Almacenados)</h2>
+      <p>Un Stored Procedure es un conjunto de instrucciones SQL que se guarda adentro de la base de datos. En vez de escribir lo mismo muchas veces, lo escribimos una sola vez, lo guardamos, y después solo lo llamamos cuando lo necesitamos.</p>
+
+      <h3 style="color:#5a8a6a; font-weight:bold;">¿Para qué sirven?</h3>
+      <ul style="line-height:1.8;">
+        <li>Para no repetir el mismo código SQL una y otra vez.</li>
+        <li>Para que la aplicación ande más rápido, porque la base de datos ya tiene el código listo.</li>
+        <li>Para tener más seguridad, porque el usuario no ve toda la consulta.</li>
+        <li>Para hacer operaciones más complejas de una sola vez.</li>
+      </ul>
+
+      <h3 style="color:#5a8a6a; font-weight:bold;">Ejemplo: Crear un Stored Procedure</h3>
+      <p>Este ejemplo es para MySQL. Guarda un procedimiento que busca usuarios que tengan cierta edad o más:</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>DELIMITER //
+
+CREATE PROCEDURE buscar_por_edad(IN edad_minima INT)
+BEGIN
+    SELECT * FROM usuarios
+    WHERE edad >= edad_minima
+    ORDER BY nombre;
+END //
+
+DELIMITER ;</code></pre>
+
+      <h3 style="color:#5a8a6a; font-weight:bold;">Ejemplo: Llamar al Stored Procedure</h3>
+      <p>Para usar el procedimiento que guardamos, escribimos CALL y el nombre:</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>-- Buscar usuarios de 18 años o más
+CALL buscar_por_edad(18);</code></pre>
+
+      <h3 style="color:#5a8a6a; font-weight:bold;">Ejemplo con parámetros de salida (OUT)</h3>
+      <p>Los parámetros OUT sirven para que el procedimiento nos devuelva un valor. En este caso, contamos cuántos usuarios hay en total:</p>
+<pre style="background-color:#2b2b2b; color:#d4cfc7; padding:12px; border-radius:4px; overflow-x:auto;"><code>DELIMITER //
+
+CREATE PROCEDURE contar_usuarios(OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM usuarios;
+END //
+
+DELIMITER ;
+
+-- Lo llamamos y guardamos el resultado
+CALL contar_usuarios(@cantidad);
+SELECT @cantidad AS total_de_usuarios;</code></pre>
+    </section>
+
+  </main>
+
+</body>
+</html>
