@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temario de SQL</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#nav" data-bs-smooth-scroll="true">
+
+<header class="hero" id="inicio">
+<div class="container">
+<h1 class="display-4 fw-bold">Temario de SQL</h1>
+<p class="lead mb-0">Lo que vimos en Bases de Datos: historia de MySQL, consultas, tipos de datos, normalización y DER.</p>
+</div>
+</header>
+
+<div id="nav"><div class="container"><ul class="nav nav-pills">
+<li class="nav-item"><a class="nav-link" href="#historia">Historia</a></li>
+<li class="nav-item"><a class="nav-link" href="#sp">Store Procedure</a></li>
+<li class="nav-item"><a class="nav-link" href="#sql">SQL</a></li>
+<li class="nav-item"><a class="nav-link" href="#diccionario">Diccionario</a></li>
+<li class="nav-item"><a class="nav-link" href="#variables">Variables</a></li>
+<li class="nav-item"><a class="nav-link" href="#normalizacion">Normalización</a></li>
+<li class="nav-item"><a class="nav-link" href="#der">DER</a></li>
+</ul></div></div>
+
+<main class="container">
+
+<section id="historia">
+<h2>Historia de MySQL</h2>
+<div class="row g-3">
+<div class="col-lg-7"><div class="card h-100"><div class="card-body">
+<h5 class="card-title">Historia</h5>
+<p>MySQL nació en 1995 de la mano de la empresa sueca MySQL AB. Es un sistema gestor de bases de datos relacionales (SGBD) de código abierto que usa SQL como lenguaje de consulta.</p>
+<p class="mb-0">En 2008 lo compró Sun Microsystems y en 2010 Sun fue adquirida por Oracle, que lo mantiene hasta hoy. Es muy usado en aplicaciones web (stack LAMP: Linux, Apache, MySQL, PHP).</p>
+</div></div></div>
+<div class="col-lg-5"><div class="card h-100"><div class="card-body">
+<h5 class="card-title">Referentes</h5>
+<ul class="list-group list-group-flush">
+<li class="list-group-item"><b>Michael "Monty" Widenius</b>: creador de MySQL y luego de MariaDB.</li>
+<li class="list-group-item"><b>David Axmark y Allan Larsson</b>: cofundadores de MySQL AB.</li>
+<li class="list-group-item"><b>Edgar F. Codd</b>: sentó las bases del modelo relacional (1970).</li>
+</ul>
+</div></div></div>
+</div>
+</section>
+
+<section id="sp">
+<h2>Store Procedure</h2>
+<div class="card"><div class="card-body">
+<p>Un <b>Stored Procedure</b> es un bloque de código SQL con nombre que se guarda en la base de datos y se ejecuta con <code>CALL</code> las veces que haga falta. Sirve para reutilizar lógica, mejorar el rendimiento y centralizar reglas en el servidor.</p>
+<pre><code>DELIMITER //
+CREATE PROCEDURE buscarUsuarios(IN texto VARCHAR(100))
+BEGIN
+  SELECT * FROM usuarios WHERE nombre LIKE CONCAT('%', texto, '%');
+END //
+DELIMITER ;
+
+CALL buscarUsuarios('Fede');</code></pre>
+</div></div>
+</section>
+
+<section id="sql">
+<h2>SQL</h2>
+
+<div class="card mb-4"><div class="card-body">
+<h5 class="card-title">Subconsultas</h5>
+<p class="mb-0">Un <code>SELECT</code> dentro de otra consulta; se usa cuando un resultado depende de otro.</p>
+<pre><code>SELECT nombre FROM usuarios
+WHERE id IN (SELECT id_usuario FROM pedidos WHERE total &gt; 1000);</code></pre>
+</div></div>
+
+<div class="card mb-4"><div class="card-body">
+<h5 class="card-title">Joins</h5>
+<p>Combinan filas de dos o más tablas relacionadas por una clave en común. Elegí un tipo:</p>
+<div class="nav nav-pills" role="tablist">
+<button class="nav-link tab-btn active" data-bs-toggle="pill" data-bs-target="#j1" type="button">INNER JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j2" type="button">JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j3" type="button">LEFT JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j4" type="button">RIGHT JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j5" type="button">OUTER JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j6" type="button">FULL JOIN</button>
+<button class="nav-link tab-btn" data-bs-toggle="pill" data-bs-target="#j7" type="button">CROSS JOIN</button>
+</div>
+<div class="tab-content mt-2">
+<div class="tab-pane fade show active" id="j1">Devuelve solo las filas con coincidencia en ambas tablas.
+<pre><code>SELECT u.nombre, p.total
+FROM usuarios u INNER JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j2">Sinónimo de INNER JOIN: si no aclarás el tipo, MySQL asume INNER.
+<pre><code>SELECT u.nombre, p.total
+FROM usuarios u JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j3">Trae todas las filas de la tabla izquierda; si no hay coincidencia, la derecha viene en NULL.
+<pre><code>SELECT u.nombre, p.total
+FROM usuarios u LEFT JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j4">Es el espejo del LEFT JOIN: trae todas las filas de la tabla derecha.
+<pre><code>SELECT u.nombre, p.total
+FROM usuarios u RIGHT JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j5">Término general para los joins que incluyen filas sin coincidencia (LEFT, RIGHT o FULL). En MySQL se escribe <code>LEFT OUTER JOIN</code> o <code>RIGHT OUTER JOIN</code>; <code>OUTER</code> es opcional.
+<pre><code>SELECT u.nombre, p.total
+FROM usuarios u LEFT OUTER JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j6">Trae todas las filas de ambas tablas, coincidan o no. MySQL no lo tiene nativo: se simula con <code>UNION</code>.
+<pre><code>SELECT u.nombre, p.total FROM usuarios u LEFT JOIN pedidos p ON u.id = p.id_usuario
+UNION
+SELECT u.nombre, p.total FROM usuarios u RIGHT JOIN pedidos p ON u.id = p.id_usuario;</code></pre></div>
+<div class="tab-pane fade" id="j7">Producto cartesiano: cada fila de una tabla con cada fila de la otra, sin <code>ON</code>.
+<pre><code>SELECT u.nombre, c.nombre
+FROM usuarios u CROSS JOIN categorias c;</code></pre></div>
+</div>
+</div></div>
+
+<div class="row row-cols-1 row-cols-md-2 g-3">
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Select</h5>Elige las columnas a mostrar.<pre><code>SELECT nombre, email FROM usuarios;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">From</h5>Indica de qué tabla se traen los datos.<pre><code>SELECT * FROM usuarios;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Where</h5>Filtra filas según una condición, antes de agrupar.<pre><code>SELECT * FROM usuarios WHERE id &gt; 10;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Like</h5>Filtra texto por patrón: <code>%</code> = cualquier cantidad de caracteres, <code>_</code> = uno solo.<pre><code>SELECT * FROM usuarios WHERE email LIKE '%@gmail.com';</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Group By</h5>Agrupa filas con un valor en común para aplicar funciones de agregación.<pre><code>SELECT id_usuario, SUM(total) AS gastado
+FROM pedidos GROUP BY id_usuario;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Having</h5>Filtra <i>después</i> de agrupar (WHERE filtra antes).<pre><code>SELECT id_usuario, COUNT(*) AS cant
+FROM pedidos GROUP BY id_usuario
+HAVING COUNT(*) &gt; 5;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Order By</h5>Ordena el resultado por una o más columnas.<pre><code>SELECT * FROM usuarios ORDER BY nombre;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Asc / Desc</h5><code>ASC</code> ordena de menor a mayor (es el valor por defecto); <code>DESC</code> de mayor a menor.<pre><code>SELECT * FROM usuarios ORDER BY id DESC;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Limit</h5>Limita la cantidad de filas devueltas.<pre><code>SELECT * FROM usuarios LIMIT 10;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Count</h5>Cuenta filas.<pre><code>SELECT COUNT(*) FROM usuarios;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Sum</h5>Suma los valores de una columna numérica.<pre><code>SELECT SUM(total) FROM pedidos;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Avg</h5>Calcula el promedio de una columna numérica.<pre><code>SELECT AVG(total) FROM pedidos;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Max</h5>Devuelve el valor más alto.<pre><code>SELECT MAX(total) FROM pedidos;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Min</h5>Devuelve el valor más bajo.<pre><code>SELECT MIN(total) FROM pedidos;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">PK y FK</h5><b>PK</b> (clave primaria): identifica cada fila, no se repite ni es NULL. <b>FK</b> (clave foránea): referencia la PK de otra tabla.<pre><code>CREATE TABLE pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT,
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Create</h5>Crea objetos nuevos: bases, tablas, etc.<pre><code>CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL
+);</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Alter Table</h5>Modifica la estructura de una tabla existente.<pre><code>ALTER TABLE usuarios ADD COLUMN telefono VARCHAR(20);</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Drop</h5>Elimina un objeto completo (estructura y datos). No se puede deshacer.<pre><code>DROP TABLE usuarios;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Truncate</h5>Vacía todos los datos pero mantiene la estructura; más rápido que un DELETE sin condición.<pre><code>TRUNCATE TABLE pedidos;</code></pre></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">Delete</h5>Borra filas específicas según una condición.<pre><code>DELETE FROM usuarios WHERE id = 5;</code></pre></div></div></div>
+</div>
+</section>
+
+<section id="diccionario">
+<h2>Diccionario de datos</h2>
+<p>Documenta cada tabla y columna: nombre, tipo, restricciones (PK, FK, UNIQUE, NULL) y qué representa. Sirve de referencia sin tener que leer el código SQL.</p>
+<div class="table-responsive"><table class="table table-bordered bg-white align-middle">
+<thead class="thead-sky"><tr><th>Tabla</th><th>Columna</th><th>Tipo</th><th>Restricción</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td rowspan="3">usuarios</td><td>id</td><td>INT</td><td>PK, AUTO_INCREMENT</td><td>Identificador único</td></tr>
+<tr><td>nombre</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Nombre completo</td></tr>
+<tr><td>email</td><td>VARCHAR(100)</td><td>NOT NULL, UNIQUE</td><td>Correo del usuario</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="variables">
+<h2>Variables (tipos de datos)</h2>
+<div class="row row-cols-1 row-cols-md-3 g-3">
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">DATE</h5>Solo fecha (año-mes-día).<br><code>2026-09-21</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">INT</h5>Números enteros.<br><code>42</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">VARCHAR</h5>Texto de longitud variable con máximo definido.<br><code>VARCHAR(100)</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">ENUM</h5>Lista fija de valores; la columna toma solo uno.<br><code>ENUM('activo','inactivo')</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">DATETIME</h5>Fecha y hora combinadas.<br><code>2026-09-21 14:30:00</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">DECIMAL</h5>Decimales exactos, ideal para dinero.<br><code>DECIMAL(10,2)</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">FLOAT</h5>Decimales de precisión aproximada.<br><code>3.14</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">CHAR</h5>Texto de longitud fija.<br><code>CHAR(2)</code> → <code>'AR'</code></div></div></div>
+<div class="col"><div class="card h-100"><div class="card-body"><h5 class="card-title">TIMESTAMP</h5>Fecha y hora; se autogenera con <code>CURRENT_TIMESTAMP</code>.<br><code>DEFAULT CURRENT_TIMESTAMP</code></div></div></div>
+</div>
+</section>
+
+<section id="normalizacion">
+<h2>Normalización</h2>
+<p>Organizar las tablas para reducir la redundancia y evitar inconsistencias, dividiendo la información en tablas relacionadas. Cada forma normal incluye a la anterior.</p>
+<div class="list-group">
+<div class="list-group-item"><h5 class="mb-1">1FN <small class="text-muted fs-6">Primera Forma Normal</small></h5>Cada columna tiene valores atómicos (sin listas ni datos repetidos en una celda) y cada fila es única.</div>
+<div class="list-group-item"><h5 class="mb-1">2FN <small class="text-muted fs-6">Segunda Forma Normal</small></h5>Cumple 1FN y todos los atributos no clave dependen de la clave primaria completa (importa cuando la PK es compuesta).</div>
+<div class="list-group-item"><h5 class="mb-1">3FN <small class="text-muted fs-6">Tercera Forma Normal</small></h5>Cumple 2FN y ningún atributo no clave depende de otro atributo no clave (sin dependencias transitivas).</div>
+</div>
+</section>
+
+<section id="der">
+<h2>DER (Diagrama Entidad-Relación)</h2>
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#d1" type="button">Buenas prácticas</button></li>
+<li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#d2" type="button">Diagrama de bloques</button></li>
+</ul>
+<div class="tab-content bg-white border border-top-0 p-3">
+<div class="tab-pane fade show active" id="d1">
+<ul class="mb-0">
+<li>Usar nombres claros y consistentes (singular o plural) en tablas y columnas.</li>
+<li>Definir siempre una PK por tabla.</li>
+<li>Marcar bien las relaciones (1 a 1, 1 a muchos, muchos a muchos) y su cardinalidad.</li>
+<li>Normalizar antes de diagramar para evitar redundancias.</li>
+<li>Documentar tipos de datos y restricciones en el diagrama.</li>
+</ul></div>
+<div class="tab-pane fade" id="d2">
+Además del clásico DER (notación de Chen, con óvalos para atributos y rombos para relaciones), el modelo se puede dibujar como <b>diagrama de bloques</b>: cada tabla es un rectángulo con sus columnas adentro y líneas que unen cada FK con la PK de otra tabla. Es lo que usan MySQL Workbench o dbdiagram.io, y resulta más simple de leer cuando hay muchas tablas.
+</div>
+</div>
+</section>
+
+</main>
+
+<footer class="footer text-center"><div>Materia: Bases de Datos — Temario de SQL</div><a href="#inicio">Volver arriba</a></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
