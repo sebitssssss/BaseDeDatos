@@ -186,11 +186,14 @@ WHERE a.session_id = 1
 ORDER BY a.intento_num;
 
 -- Logros desbloqueados por jugador
-SELECT
-p.nombre_usuario,
-al.tipo_logro,
-al.fecha_hora
+DELIMITER //
+CREATE PROCEDURE sp_obtener_logros_jugadores()
+BEGIN
+SELECT p.nombre_usuario, al.tipo_logro, al.fecha_hora
 FROM AchievementLogs al
 JOIN Sessions s ON s.id = al.session_id
 JOIN Players p ON p.id = s.player_id
 ORDER BY p.nombre_usuario, al.fecha_hora;
+END //
+DELIMITER ;
+-- para llamar este codigo hay que escribir esto: CALL sp_obtener_logros_jugadores();
