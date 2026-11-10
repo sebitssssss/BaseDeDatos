@@ -180,7 +180,7 @@ END //
 DELIMITER ;
 -- para llamar este codigo hay que escribir esto: CALL sp_tiempo_promedio_dificultad();
 
--- Repetición de los intentos de una partida
+-- Repeticion de los intentos de una partida
 SELECT
 a.intento_num,
 a.combinacion_intentada,
