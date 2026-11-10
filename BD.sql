@@ -164,6 +164,9 @@ GROUP BY p.id, p.nombre_usuario
 ORDER BY victorias DESC;
 
 -- Tiempo promedio por dificultad
+DELIMITER //
+CREATE PROCEDURE sp_tiempo_promedio_dificultad()
+BEGIN
 SELECT
 s.dificultad,
 COUNT(ss.id) AS partidas_terminadas,
@@ -173,6 +176,9 @@ FROM SessionStats ss
 JOIN Sessions s ON s.id = ss.session_id
 GROUP BY s.dificultad
 ORDER BY s.dificultad;
+END //
+DELIMITER ;
+-- para llamar este codigo hay que escribir esto: CALL sp_tiempo_promedio_dificultad();
 
 -- Repetición de los intentos de una partida
 SELECT
