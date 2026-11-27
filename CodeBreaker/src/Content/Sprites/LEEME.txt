@@ -1,5 +1,0 @@
-Acá van los sprites del juego. El juego acepta dos formatos:
-- PNG sueltos: cada archivo es un sprite entero y se nombra por el archivo (por ejemplo rojo.png).
-- Spritesheet PNG + XML (por ejemplo de Kenney): el recorte de cada sprite sale del XML.
-En config.conf se indica qué sprite usar para cada color (sprite_red=rojo.png, etc.).
-Los pasos completos están en assets/README.md.
